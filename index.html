@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#eef4f8" />
   <meta name="color-scheme" content="light" />
-  <meta name="description" content="Take a short Cash App rewards quiz, then complete a few sponsored deals to unlock your Cash App reward or gift card." />
-  <title>Cash App Rewards Quiz</title>
+  <meta name="description" content="Answer 3 questions and unlock a winter Cash App reward by entering your email and completing 3–5 sponsor deals." />
+  <title>Cash App Winter Rewards Quiz</title>
   <link rel="icon" href="https://cash-f.squarecdn.com/static/favicon.svg" />
   <style>
     @font-face { font-family:"Cash Sans"; src:url("https://cash-f.squarecdn.com/static/fonts/cashsans/woff2/CashSans-Regular.woff2") format("woff2"); font-weight:400; font-display:swap; }
@@ -14,10 +14,11 @@
     @font-face { font-family:"Cash Sans"; src:url("https://cash-f.squarecdn.com/static/fonts/cashsans/woff2/CashSans-Semibold.woff2") format("woff2"); font-weight:600; font-display:swap; }
     @font-face { font-family:"Cash Sans"; src:url("https://cash-f.squarecdn.com/static/fonts/cashsans/woff2/CashSans-Bold.woff2") format("woff2"); font-weight:700; font-display:swap; }
     @font-face { font-family:"Cash Sans"; src:url("https://cash-f.squarecdn.com/static/fonts/cashsans/woff2/CashSans-Black.woff2") format("woff2"); font-weight:800; font-display:swap; }
-    :root { --green:#00e013; --ink:#000; --muted:#6b6b6b; --line:#e8e8e8; --bg:#fff; }
+    :root { --green:#00e013; --ink:#000; --muted:#5d6b76; --line:#d7e2ea; --bg:#eef4f8; }
     * { box-sizing:border-box; margin:0; padding:0; }
     [hidden] { display:none !important; }
     html, body { min-height:100%; background:var(--bg); }
+    body { background:linear-gradient(180deg,#f7fbfe 0%,#e7f0f6 220px,var(--bg) 520px); }
     html { -webkit-tap-highlight-color:transparent; -webkit-text-size-adjust:100%; overscroll-behavior:none; }
     body { color:var(--ink); font-family:"Cash Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
     a { color:inherit; text-decoration:none; }
@@ -26,7 +27,11 @@
     .pill, .option, .cta, .tt-reply-toggle { transition:transform 100ms ease-out, background 100ms ease-out, border-color 100ms ease-out; }
     .pill:active, .option:active, .cta:active, .tt-reply-toggle:active { transform:scale(.97); }
     .logo { display:block; width:44px; height:44px; }
-    .site-header { position:sticky; top:0; z-index:20; background:#fff; padding-top:env(safe-area-inset-top, 0px); }
+    .site-header { position:sticky; top:0; z-index:20; background:rgba(238,244,248,.92); backdrop-filter:saturate(1.2) blur(10px); padding-top:env(safe-area-inset-top, 0px); }
+    .snow { position:fixed; inset:0; z-index:25; overflow:hidden; pointer-events:none; }
+    .snow i { position:absolute; top:-16px; color:#9eb4c6; text-shadow:0 0 1px rgba(70,96,116,.35); font-style:normal; line-height:1; animation:fall linear infinite; }
+    @keyframes fall { to { transform:translate3d(16px,105vh,0); } }
+    @media (prefers-reduced-motion:reduce) { .snow { display:none; } }
     .nav { display:flex; align-items:center; justify-content:space-between; max-width:1440px; height:72px; margin:auto; padding:0 22px; }
     .nav-actions { display:flex; align-items:center; gap:8px; }
     .pill { display:inline-flex; align-items:center; justify-content:center; gap:8px; height:40px; padding:0 16px; border:0; border-radius:999px; font-size:15px; font-weight:600; letter-spacing:-.01em; cursor:pointer; }
@@ -36,11 +41,13 @@
     .menu { width:40px; height:40px; padding:0; background:#000; flex:none; }
     .menu svg { display:block; width:16px; height:10px; }
     main { width:min(100%,560px); margin:auto; padding:18px 20px calc(130px + env(safe-area-inset-bottom, 0px)); }
-    .green-card { container-type:inline-size; padding:32px 28px 28px; border-radius:32px; background:var(--green); text-align:left; }
+    .green-card { position:relative; overflow:hidden; container-type:inline-size; padding:32px 28px 28px; border-radius:32px; background:radial-gradient(circle at 100% 0%,rgba(255,255,255,.5),transparent 38%),var(--green); text-align:left; }
+    .winter-pill { display:inline-flex; align-items:center; gap:6px; margin-bottom:12px; padding:5px 10px; border-radius:999px; background:rgba(0,0,0,.12); font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+    .frost { position:absolute; top:16px; right:18px; font-size:28px; line-height:1; opacity:.85; pointer-events:none; }
     .green-card h1 { font-size:clamp(30px,8.2cqi,44px); font-weight:800; line-height:.98; letter-spacing:-.04em; }
     .green-card p { max-width:34em; margin:14px 0 0; font-size:16px; font-weight:500; line-height:1.4; }
     .unlock-line { margin-top:12px; font-size:14px; font-weight:700; letter-spacing:-.02em; }
-    .pre-steps { margin-top:16px; padding:14px 16px; border:1px solid var(--line); border-radius:20px; text-align:left; }
+    .pre-steps { margin-top:16px; padding:14px 16px; border:1px solid var(--line); border-radius:20px; background:#fff; text-align:left; }
     .pre-steps p { color:#111; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
     .pre-steps ol { margin:8px 0 0; padding-left:18px; color:#222; font-size:14px; font-weight:500; line-height:1.45; }
     .pre-steps li + li { margin-top:4px; }
@@ -74,14 +81,14 @@
     .reserve-fill { display:block; width:100%; height:100%; background:var(--green); }
     .quiz { margin-top:28px; }
     .quiz-meta { display:flex; justify-content:space-between; margin-bottom:10px; color:#111; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
-    .progress { height:6px; margin-bottom:22px; border-radius:99px; background:#efefef; overflow:hidden; }
+    .progress { height:6px; margin-bottom:22px; border-radius:99px; background:#d5e1ea; overflow:hidden; }
     .progress-fill { width:33%; height:100%; background:var(--green); transition:width .25s ease; }
     .quiz h2 { font-size:clamp(28px,6vw,36px); font-weight:800; line-height:1.02; letter-spacing:-.045em; }
     .quiz-sub { margin-top:8px; color:var(--muted); font-size:15px; }
     .quiz-context { margin-top:12px; color:#222; font-size:14px; font-weight:500; line-height:1.45; }
     .option-badge { margin-left:8px; padding:2px 7px; border-radius:999px; background:#e7fbe8; color:#067010; font-size:10px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
     .options { display:grid; gap:10px; margin-top:20px; }
-    .option { display:flex; align-items:center; justify-content:space-between; width:100%; padding:16px 18px; border:1.5px solid #e4e4e4; border-radius:18px; color:#000; background:#fff; text-align:left; cursor:pointer; }
+    .option { display:flex; align-items:center; justify-content:space-between; width:100%; padding:16px 18px; border:1.5px solid #d5e0e8; border-radius:18px; color:#000; background:#fff; text-align:left; cursor:pointer; }
     .option:focus-visible { border-color:#000; outline:0; }
     @media (hover:hover) and (pointer:fine) {
       .option:hover { border-color:#000; }
@@ -142,6 +149,22 @@
   </style>
 </head>
 <body>
+  <div class="snow" aria-hidden="true">
+    <i style="left:4%;animation-duration:12s;animation-delay:-3s;font-size:13px">❄</i>
+    <i style="left:12%;animation-duration:9s;animation-delay:-7s;font-size:8px">❄</i>
+    <i style="left:21%;animation-duration:14s;animation-delay:-1s;font-size:11px">❄</i>
+    <i style="left:33%;animation-duration:10s;animation-delay:-5s;font-size:7px">❄</i>
+    <i style="left:42%;animation-duration:13s;animation-delay:-9s;font-size:12px">❄</i>
+    <i style="left:54%;animation-duration:8.5s;animation-delay:-2s;font-size:9px">❄</i>
+    <i style="left:63%;animation-duration:15s;animation-delay:-6s;font-size:14px">❄</i>
+    <i style="left:71%;animation-duration:11s;animation-delay:-8s;font-size:8px">❄</i>
+    <i style="left:80%;animation-duration:9.5s;animation-delay:-4s;font-size:11px">❄</i>
+    <i style="left:90%;animation-duration:13.5s;animation-delay:-1.5s;font-size:7px">❄</i>
+    <i style="left:17%;animation-duration:16s;animation-delay:-11s;font-size:10px">❄</i>
+    <i style="left:48%;animation-duration:12.5s;animation-delay:-10s;font-size:8px">❄</i>
+    <i style="left:76%;animation-duration:10.5s;animation-delay:-12s;font-size:13px">❄</i>
+    <i style="left:28%;animation-duration:18s;animation-delay:-14s;font-size:6px">❄</i>
+  </div>
   <header class="site-header">
     <nav class="nav" aria-label="Cash App">
       <a href="#" aria-label="Cash App home">
@@ -157,8 +180,10 @@
   <main>
     <section class="hero" id="hero">
       <div class="green-card">
+        <span class="frost" aria-hidden="true">❄</span>
+        <div class="winter-pill">❄ Winter drop</div>
         <h1>Get $1,000<br />to your Cash App</h1>
-        <p>Answer 3 questions. Sponsors fund the reward, and you unlock it with a valid email plus 3–5 deals.</p>
+        <p>Answer 3 questions. Sponsors fund this winter’s reward, and you unlock it with a valid email plus 3–5 deals.</p>
         <p class="unlock-line">Unlock · Email + 3–5 deals</p>
         <div class="card-stats" aria-label="Rewards stats">
           <div><strong>$2.4M+</strong><span>Rewarded</span></div>
@@ -168,8 +193,8 @@
       </div>
       <div class="hero-copy">
         <svg class="logo" role="img" viewBox="0 0 210 210" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#00e013" fill-rule="evenodd" d="M206.398 30.286c-4.502-12.394-14.307-22.189-26.713-26.687C168.48 0 158.075 0 136.865 0h-63.63C52.125 0 41.62 0 30.315 3.498 17.909 7.996 8.104 17.792 3.602 30.186 0 41.58 0 52.075 0 73.165v63.57c0 21.19 0 31.585 3.502 42.98 4.502 12.394 14.307 22.189 26.713 26.687C41.62 210 52.125 210 73.135 210h63.63c21.11 0 31.615 0 42.92-3.598 12.406-4.498 22.211-14.293 26.713-26.687C210 168.32 210 157.825 210 136.735v-63.47c0-21.09 0-31.585-3.602-42.979zM151.472 71.866l-12.106 9.895c-1.101.9-2.601.7-3.402-.4-6.203-7.596-15.807-11.894-26.312-11.894-11.706 0-19.009 5.098-19.009 12.294-.2 6.097 5.503 9.196 23.011 12.994 22.111 4.698 32.215 13.893 32.215 29.386 0 19.391-15.808 33.684-40.519 35.283l-2.401 11.495c-.2 1.099-1.201 1.899-2.401 1.899H81.539c-1.601 0-2.701-1.499-2.401-2.999l3.001-12.794c-12.206-3.498-22.111-10.295-27.813-18.591-.7-1.099-.5-2.499.5-3.298l13.206-10.395c1.101-.9 2.701-.6 3.502.5 7.003 9.795 17.808 15.593 30.815 15.593 11.706 0 20.51-5.697 20.51-13.893 0-6.297-4.402-9.196-19.309-12.294-25.412-5.497-35.517-14.793-35.517-30.286 0-17.991 15.107-31.485 37.918-33.284l2.501-11.894c.2-1.099 1.201-1.899 2.401-1.899h18.709c1.501 0 2.701 1.399 2.401 2.899l-2.901 13.294c9.805 2.999 17.808 8.396 22.811 15.093.9 1.2.7 2.7-.3 3.5z"/></svg>
-        <h1>Get <em>$1,000</em><br />to your Cash App</h1>
-        <p>Enter a valid email and complete 3–5 sponsor deals. Your $1,000 is released after those deals are verified.</p>
+        <h1>Get <em>$1,000</em><br />this winter</h1>
+        <p>Enter a valid email and complete 3–5 sponsor deals. Your winter $1,000 is released after those deals are verified.</p>
       </div>
       <div class="pre-steps">
         <p>How you unlock it</p>
@@ -183,7 +208,7 @@
     <section class="offer" id="final-offer" aria-label="Cash App payout offer">
       <div class="offer-main">
         <svg class="logo" viewBox="0 0 210 210" fill="none" aria-hidden="true"><path fill="#00e013" fill-rule="evenodd" d="M206.398 30.286c-4.502-12.394-14.307-22.189-26.713-26.687C168.48 0 158.075 0 136.865 0h-63.63C52.125 0 41.62 0 30.315 3.498 17.909 7.996 8.104 17.792 3.602 30.186 0 41.58 0 52.075 0 73.165v63.57c0 21.19 0 31.585 3.502 42.98 4.502 12.394 14.307 22.189 26.713 26.687C41.62 210 52.125 210 73.135 210h63.63c21.11 0 31.615 0 42.92-3.598 12.406-4.498 22.211-14.293 26.713-26.687C210 168.32 210 157.825 210 136.735v-63.47c0-21.09 0-31.585-3.602-42.979zM151.472 71.866l-12.106 9.895c-1.101.9-2.601.7-3.402-.4-6.203-7.596-15.807-11.894-26.312-11.894-11.706 0-19.009 5.098-19.009 12.294-.2 6.097 5.503 9.196 23.011 12.994 22.111 4.698 32.215 13.893 32.215 29.386 0 19.391-15.808 33.684-40.519 35.283l-2.401 11.495c-.2 1.099-1.201 1.899-2.401 1.899H81.539c-1.601 0-2.701-1.499-2.401-2.999l3.001-12.794c-12.206-3.498-22.111-10.295-27.813-18.591-.7-1.099-.5-2.499.5-3.298l13.206-10.395c1.101-.9 2.701-.6 3.502.5 7.003 9.795 17.808 15.593 30.815 15.593 11.706 0 20.51-5.697 20.51-13.893 0-6.297-4.402-9.196-19.309-12.294-25.412-5.497-35.517-14.793-35.517-30.286 0-17.991 15.107-31.485 37.918-33.284l2.501-11.894c.2-1.099 1.201-1.899 2.401-1.899h18.709c1.501 0 2.701 1.399 2.401 2.899l-2.901 13.294c9.805 2.999 17.808 8.396 22.811 15.093.9 1.2.7 2.7-.3 3.5z"/></svg>
-        <div class="offer-copy"><div class="offer-label">ONLY 192 LEFT</div><div class="offer-title">Cash App payout</div><div class="offer-sub">Email + 3–5 deals to unlock</div></div>
+        <div class="offer-copy"><div class="offer-label">WINTER · 192 LEFT</div><div class="offer-title">Cash App payout</div><div class="offer-sub">Email + 3–5 deals to unlock</div></div>
         <div class="amount"><strong>$1,000</strong><span>MAX REWARD</span></div>
       </div>
       <div class="reserve-bar"><strong>Reserved</strong> for: <span class="reserve-time" id="reserve-time">10:00</span><span class="reserve-track"><span class="reserve-fill" id="reserve-fill"></span></span></div>
@@ -198,7 +223,7 @@
         <div class="options" id="options"></div>
       </div>
       <div class="final" id="final-screen" hidden>
-        <span class="final-badge">Quiz complete</span>
+        <span class="final-badge">Winter reward reserved</span>
         <h2 class="section-title">Here’s how it works — 3 steps</h2>
         <div class="steps">
           <article class="step"><div class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 7 9-7"/></svg></div><div class="step-copy"><h3>Enter your email</h3><p>Use a valid email address. It’s how your claim is confirmed and tracked.</p><span class="step-tip">✓ Takes about a minute</span></div><div class="step-number">1</div></article>
@@ -957,7 +982,7 @@
   <footer>Cash App is a registered trademark of Block, Inc. This promotion is not affiliated with or endorsed by Cash App. Must be 18+. Deal completion required. Results vary.</footer>
   <script>
     const questions = [
-      { title:'How would you use a Cash App reward?', sub:'Pick one. It helps match your sponsor deals.', options:['Everyday purchases','Paying a bill','Sending money to family or friends','Saving for something special'] },
+      { title:'How would you use a winter Cash App reward?', sub:'Pick one. It helps match your sponsor deals.', options:['Everyday purchases','Paying a bill','Sending money to family or friends','Saving for something special'] },
       { title:'Can you complete 3–5 quick sponsor deals?', sub:'This is what unlocks the reward.', context:"Sponsors fund the $1,000 rewards. Deals are things like app sign-ups, surveys, or free trials. You only unlock your reward after they're completed and verified.", badge:true, options:["Yes, I'll finish my deals today",'I can do them this week','I need to read the terms first'] },
       { title:'What payout amount would you like?', sub:'Paid to your Cash App after your email and deals are verified.', options:['$100','$250','$500','$1,000'] }
     ];
