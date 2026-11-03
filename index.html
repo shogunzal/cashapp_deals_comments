@@ -90,6 +90,7 @@
     .option-label { display:flex; align-items:center; gap:12px; font-size:16px; font-weight:600; }
     .radio { width:18px; height:18px; border:2px solid #c8c8c8; border-radius:50%; }
     .arrow { font-size:22px; font-weight:500; }
+    .result-echo { margin:0 0 12px; color:#1a1a1a; font-size:15px; font-weight:700; line-height:1.35; }
     .final-badge { display:inline-block; margin:8px 0 6px; padding:5px 10px; border-radius:999px; color:#067010; background:#e7fbe8; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
     .section-title { margin:4px 0 10px; font-size:24px; font-weight:800; letter-spacing:-.04em; text-align:left; }
     .steps { display:grid; gap:8px; }
@@ -130,6 +131,7 @@
     .tt-replies.open { display:block; margin-top:10px; }
     .tt-divider { height:1px; background:var(--line); margin:14px 0; }
 
+    .claim-proof { margin-top:12px; color:#3d4a54; font-size:13px; font-weight:600; line-height:1.35; text-align:center; }
     .cta { position:fixed; z-index:30; right:18px; bottom:calc(16px + env(safe-area-inset-bottom, 0px)); left:18px; width:min(100% - 36px,520px); margin:auto; padding:22px 20px; border:0; border-radius:999px; color:#000; background:var(--green); font-size:17px; font-weight:700; line-height:1.2; text-align:center; cursor:pointer; }
     .cta:disabled { opacity:.7; cursor:wait; }
     footer { max-width:560px; margin:0 auto; padding:8px 20px calc(132px + env(safe-area-inset-bottom, 0px)); color:#9a9a9a; font-size:11px; line-height:1.45; text-align:center; }
@@ -185,7 +187,7 @@
       </div>
       <div class="hero-copy">
         <svg class="logo" role="img" viewBox="0 0 210 210" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#00e013" fill-rule="evenodd" d="M206.398 30.286c-4.502-12.394-14.307-22.189-26.713-26.687C168.48 0 158.075 0 136.865 0h-63.63C52.125 0 41.62 0 30.315 3.498 17.909 7.996 8.104 17.792 3.602 30.186 0 41.58 0 52.075 0 73.165v63.57c0 21.19 0 31.585 3.502 42.98 4.502 12.394 14.307 22.189 26.713 26.687C41.62 210 52.125 210 73.135 210h63.63c21.11 0 31.615 0 42.92-3.598 12.406-4.498 22.211-14.293 26.713-26.687C210 168.32 210 157.825 210 136.735v-63.47c0-21.09 0-31.585-3.602-42.979zM151.472 71.866l-12.106 9.895c-1.101.9-2.601.7-3.402-.4-6.203-7.596-15.807-11.894-26.312-11.894-11.706 0-19.009 5.098-19.009 12.294-.2 6.097 5.503 9.196 23.011 12.994 22.111 4.698 32.215 13.893 32.215 29.386 0 19.391-15.808 33.684-40.519 35.283l-2.401 11.495c-.2 1.099-1.201 1.899-2.401 1.899H81.539c-1.601 0-2.701-1.499-2.401-2.999l3.001-12.794c-12.206-3.498-22.111-10.295-27.813-18.591-.7-1.099-.5-2.499.5-3.298l13.206-10.395c1.101-.9 2.701-.6 3.502.5 7.003 9.795 17.808 15.593 30.815 15.593 11.706 0 20.51-5.697 20.51-13.893 0-6.297-4.402-9.196-19.309-12.294-25.412-5.497-35.517-14.793-35.517-30.286 0-17.991 15.107-31.485 37.918-33.284l2.501-11.894c.2-1.099 1.201-1.899 2.401-1.899h18.709c1.501 0 2.701 1.399 2.401 2.899l-2.901 13.294c9.805 2.999 17.808 8.396 22.811 15.093.9 1.2.7 2.7-.3 3.5z"/></svg>
-        <h1>Get <em>$1,000</em><br />this winter</h1>
+        <h1>Get <em id="picked-hero">$1,000</em><br />this winter</h1>
         <p>Email + 3–5 deals. Paid after they’re verified.</p>
       </div>
     </section>
@@ -193,7 +195,7 @@
       <div class="offer-main">
         <svg class="logo" viewBox="0 0 210 210" fill="none" aria-hidden="true"><path fill="#00e013" fill-rule="evenodd" d="M206.398 30.286c-4.502-12.394-14.307-22.189-26.713-26.687C168.48 0 158.075 0 136.865 0h-63.63C52.125 0 41.62 0 30.315 3.498 17.909 7.996 8.104 17.792 3.602 30.186 0 41.58 0 52.075 0 73.165v63.57c0 21.19 0 31.585 3.502 42.98 4.502 12.394 14.307 22.189 26.713 26.687C41.62 210 52.125 210 73.135 210h63.63c21.11 0 31.615 0 42.92-3.598 12.406-4.498 22.211-14.293 26.713-26.687C210 168.32 210 157.825 210 136.735v-63.47c0-21.09 0-31.585-3.602-42.979zM151.472 71.866l-12.106 9.895c-1.101.9-2.601.7-3.402-.4-6.203-7.596-15.807-11.894-26.312-11.894-11.706 0-19.009 5.098-19.009 12.294-.2 6.097 5.503 9.196 23.011 12.994 22.111 4.698 32.215 13.893 32.215 29.386 0 19.391-15.808 33.684-40.519 35.283l-2.401 11.495c-.2 1.099-1.201 1.899-2.401 1.899H81.539c-1.601 0-2.701-1.499-2.401-2.999l3.001-12.794c-12.206-3.498-22.111-10.295-27.813-18.591-.7-1.099-.5-2.499.5-3.298l13.206-10.395c1.101-.9 2.701-.6 3.502.5 7.003 9.795 17.808 15.593 30.815 15.593 11.706 0 20.51-5.697 20.51-13.893 0-6.297-4.402-9.196-19.309-12.294-25.412-5.497-35.517-14.793-35.517-30.286 0-17.991 15.107-31.485 37.918-33.284l2.501-11.894c.2-1.099 1.201-1.899 2.401-1.899h18.709c1.501 0 2.701 1.399 2.401 2.899l-2.901 13.294c9.805 2.999 17.808 8.396 22.811 15.093.9 1.2.7 2.7-.3 3.5z"/></svg>
         <div class="offer-copy"><div class="offer-label">WINTER · 192 LEFT</div><div class="offer-title">Cash App payout</div><div class="offer-sub">Email + 3–5 deals to unlock</div></div>
-        <div class="amount"><strong>$1,000</strong><span>MAX REWARD</span></div>
+        <div class="amount"><strong id="picked-amount">$1,000</strong><span>YOUR AMOUNT</span></div>
       </div>
       <div class="reserve-bar"><strong>Reserved</strong> for: <span class="reserve-time" id="reserve-time">10:00</span><span class="reserve-track"><span class="reserve-fill" id="reserve-fill"></span></span></div>
     </section>
@@ -208,6 +210,7 @@
       </div>
       <div class="final" id="final-screen" hidden>
         <span class="final-badge">Winter reward reserved</span>
+        <p class="result-echo" id="result-echo"></p>
         <h2 class="section-title">Here’s how it works — 3 steps</h2>
         <div class="steps">
           <article class="step"><div class="step-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 7 9-7"/></svg></div><div class="step-copy"><h3>Enter your email</h3><p>A valid address, so the claim can be tracked.</p></div><div class="step-number">1</div></article>
@@ -216,9 +219,10 @@
         </div>
         <div class="verify">
           <div class="verify-flag">Verification required</div>
-          <p>Your $1,000 stays pending until the email and 3–5 deals are done. Read each deal’s terms so it counts.</p>
+          <p id="picked-verify">Your $1,000 stays pending until the email and 3–5 deals are done. Read each deal’s terms so it counts.</p>
         </div>
         <div class="trust-proof"><span class="trust-stars">★★★★★</span><span>4.5 on Trustpilot · 50,000+ reviews</span></div>
+        <p class="claim-proof">jake_cash · “$132 hit my Cash App after 3 deals.”</p>
       </div>
     </section>
     <section class="community">
@@ -965,13 +969,26 @@
   <footer>Cash App is a registered trademark of Block, Inc. This promotion is not affiliated with or endorsed by Cash App. Must be 18+. Deal completion required. Results vary.</footer>
   <script>
     const questions = [
-      { title:'How would you use a winter Cash App reward?', sub:'Pick one.', options:['Everyday purchases','Paying a bill','Sending money to family or friends','Saving for something special'] },
+      { title:'How would you use a winter Cash App reward?', sub:'Pick one.', options:['Everyday purchases','Paying a bill','Family or friends','Saving for something special'] },
       { title:'Can you complete 3–5 quick sponsor deals?', sub:'This is what unlocks it.', context:'Sponsors fund the $1,000. Deals are app sign-ups, surveys, or free trials, and it only unlocks after they’re verified.', badge:true, options:["Yes, I'll finish my deals today",'I can do them this week','I need to read the terms first'] },
       { title:'What payout amount would you like?', sub:'Paid to your Cash App after your email and deals are verified.', options:['$100','$250','$500','$1,000'] }
     ];
-    let index = 0, seconds = 600;
+    const useLine = {
+      'Everyday purchases':'everyday purchases',
+      'Paying a bill':'paying a bill',
+      'Family or friends':'family or friends',
+      'Saving for something special':'something special'
+    };
+    const dealLine = {
+      "Yes, I'll finish my deals today":"You’ll finish the deals today.",
+      'I can do them this week':'You’ll do the deals this week.',
+      'I need to read the terms first':'You’ll read each deal’s terms first.'
+    };
+    let index = 0;
+    const picks = [];
     const quizScreen = document.getElementById('quiz-screen');
     const finalScreen = document.getElementById('final-screen');
+    let seconds = 600;
     const cta = document.getElementById('cta');
     function renderQuestion() {
       const q = questions[index];
@@ -986,16 +1003,26 @@
       context.hidden = !q.context;
       document.getElementById('options').innerHTML = q.options.map((option, i) => {
         const badge = q.badge && i === 0 ? '<span class="option-badge">Recommended</span>' : '';
-        return '<button class="option" type="button"><span class="option-label"><span class="radio"></span><span>' + option + badge + '</span></span><span class="arrow" aria-hidden="true">›</span></button>';
+        return '<button class="option" type="button" data-choice="' + option.replace(/"/g, '&quot;') + '"><span class="option-label"><span class="radio"></span><span>' + option + badge + '</span></span><span class="arrow" aria-hidden="true">›</span></button>';
       }).join('');
-      document.querySelectorAll('.option').forEach(button => button.addEventListener('click', answer));
+      document.querySelectorAll('.option').forEach(button => button.addEventListener('click', () => answer(button.getAttribute('data-choice'))));
     }
-    function answer() {
+    function answer(choice) {
+      picks[index] = choice;
       if (index < questions.length - 1) { index += 1; renderQuestion(); return; }
+      const amount = picks[2] || '$1,000';
+      const use = useLine[picks[0]] || 'a Cash App reward';
+      const when = dealLine[picks[1]] || 'You’ll complete the deals before it pays.';
+      document.getElementById('picked-hero').textContent = amount;
+      document.getElementById('picked-amount').textContent = amount;
+      document.getElementById('result-echo').textContent = 'You picked ' + amount + ' for ' + use + '. ' + when;
+      document.getElementById('picked-verify').textContent = 'Your ' + amount + ' stays pending until the email and 3–5 deals are done. Read each deal’s terms so it counts.';
       quizScreen.hidden = true;
       finalScreen.hidden = false;
       document.body.classList.add('final-state');
       cta.hidden = false;
+      cta.innerHTML = 'Claim My ' + amount + ' <span aria-hidden="true">→</span>';
+      window.scrollTo(0, 0);
       cta.onclick = () => {
         if (cta.disabled) return;
         cta.disabled = true;
